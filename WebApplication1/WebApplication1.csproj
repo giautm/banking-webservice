@@ -137,12 +137,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebService1\BankingWebService.csproj">
-      <Project>{c193df76-1837-4e5e-b0ec-46428dc46695}</Project>
-      <Name>BankingWebService</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <PropertyGroup>
