@@ -14,7 +14,7 @@ namespace BankingWebService.Models
     [Column("account_id")]
     public long Id { get; set; }
 
-    [StringLength(20)]
+    [StringLength(200)]
     [Column("account_number")]
     public string Number { get; set; }
 
@@ -54,7 +54,7 @@ namespace BankingWebService.Models
 
     public string _generateAccountNumber()
     {
-      return string.Empty;
+      return Guid.NewGuid().ToString();
     }
   }
 }
