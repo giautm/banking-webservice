@@ -127,6 +127,7 @@ namespace App.Banking {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(App.Banking.AccountsResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(App.Banking.AccountResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(App.Banking.TransferResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(App.Banking.TransactionsResult))]
     public partial class LoginResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -214,9 +215,25 @@ namespace App.Banking {
     public partial class AccountResult : App.Banking.LoginResult {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private App.Banking.User UserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private App.Banking.UserAccount AccountField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public App.Banking.User User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
         public App.Banking.UserAccount Account {
             get {
                 return this.AccountField;
@@ -248,6 +265,29 @@ namespace App.Banking {
                 if ((object.ReferenceEquals(this.TransactionField, value) != true)) {
                     this.TransactionField = value;
                     this.RaisePropertyChanged("Transaction");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransactionsResult", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class TransactionsResult : App.Banking.LoginResult {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private App.Banking.Transaction[] TransactionsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public App.Banking.Transaction[] Transactions {
+            get {
+                return this.TransactionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TransactionsField, value) != true)) {
+                    this.TransactionsField = value;
+                    this.RaisePropertyChanged("Transactions");
                 }
             }
         }
@@ -387,6 +427,15 @@ namespace App.Banking {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TokenField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentField;
+        
         private long UserIdField;
         
         private long UserSessionField;
@@ -439,7 +488,46 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string Comment {
+            get {
+                return this.CommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentField, value) != true)) {
+                    this.CommentField = value;
+                    this.RaisePropertyChanged("Comment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
         public long UserId {
             get {
                 return this.UserIdField;
@@ -452,7 +540,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
         public long UserSession {
             get {
                 return this.UserSessionField;
@@ -465,7 +553,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=7)]
         public long UserAccount {
             get {
                 return this.UserAccountField;
@@ -478,7 +566,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
         public decimal Amount {
             get {
                 return this.AmountField;
@@ -491,7 +579,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
         public bool IsApprove {
             get {
                 return this.IsApproveField;
@@ -504,7 +592,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=10)]
         public System.Nullable<System.DateTime> ApproveAt {
             get {
                 return this.ApproveAtField;
@@ -517,7 +605,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=11)]
         public long ApproveBy {
             get {
                 return this.ApproveByField;
@@ -530,7 +618,7 @@ namespace App.Banking {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=12)]
         public System.Nullable<System.DateTime> CreatedAt {
             get {
                 return this.CreatedAtField;
@@ -605,6 +693,13 @@ namespace App.Banking {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/transfer", ReplyAction="*")]
         System.Threading.Tasks.Task<App.Banking.transferResponse> transferAsync(App.Banking.transferRequest request);
+        
+        // CODEGEN: Generating message contract since element name sessionToken from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/transactionList", ReplyAction="*")]
+        App.Banking.transactionListResponse transactionList(App.Banking.transactionListRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/transactionList", ReplyAction="*")]
+        System.Threading.Tasks.Task<App.Banking.transactionListResponse> transactionListAsync(App.Banking.transactionListRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1100,6 +1195,78 @@ namespace App.Banking {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class transactionListRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="transactionList", Namespace="http://tempuri.org/", Order=0)]
+        public App.Banking.transactionListRequestBody Body;
+        
+        public transactionListRequest() {
+        }
+        
+        public transactionListRequest(App.Banking.transactionListRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class transactionListRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string sessionToken;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string accountNumber;
+        
+        public transactionListRequestBody() {
+        }
+        
+        public transactionListRequestBody(string sessionToken, string accountNumber) {
+            this.sessionToken = sessionToken;
+            this.accountNumber = accountNumber;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class transactionListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="transactionListResponse", Namespace="http://tempuri.org/", Order=0)]
+        public App.Banking.transactionListResponseBody Body;
+        
+        public transactionListResponse() {
+        }
+        
+        public transactionListResponse(App.Banking.transactionListResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class transactionListResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public App.Banking.TransactionsResult transactionListResult;
+        
+        public transactionListResponseBody() {
+        }
+        
+        public transactionListResponseBody(App.Banking.TransactionsResult transactionListResult) {
+            this.transactionListResult = transactionListResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface AccountSoapChannel : App.Banking.AccountSoap, System.ServiceModel.IClientChannel {
     }
@@ -1311,6 +1478,33 @@ namespace App.Banking {
             inValue.Body.receiveAccountNumber = receiveAccountNumber;
             inValue.Body.amount = amount;
             return ((App.Banking.AccountSoap)(this)).transferAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        App.Banking.transactionListResponse App.Banking.AccountSoap.transactionList(App.Banking.transactionListRequest request) {
+            return base.Channel.transactionList(request);
+        }
+        
+        public App.Banking.TransactionsResult transactionList(string sessionToken, string accountNumber) {
+            App.Banking.transactionListRequest inValue = new App.Banking.transactionListRequest();
+            inValue.Body = new App.Banking.transactionListRequestBody();
+            inValue.Body.sessionToken = sessionToken;
+            inValue.Body.accountNumber = accountNumber;
+            App.Banking.transactionListResponse retVal = ((App.Banking.AccountSoap)(this)).transactionList(inValue);
+            return retVal.Body.transactionListResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<App.Banking.transactionListResponse> App.Banking.AccountSoap.transactionListAsync(App.Banking.transactionListRequest request) {
+            return base.Channel.transactionListAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<App.Banking.transactionListResponse> transactionListAsync(string sessionToken, string accountNumber) {
+            App.Banking.transactionListRequest inValue = new App.Banking.transactionListRequest();
+            inValue.Body = new App.Banking.transactionListRequestBody();
+            inValue.Body.sessionToken = sessionToken;
+            inValue.Body.accountNumber = accountNumber;
+            return ((App.Banking.AccountSoap)(this)).transactionListAsync(inValue);
         }
     }
 }

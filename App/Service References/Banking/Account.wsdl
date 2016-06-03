@@ -113,6 +113,7 @@
         <s:complexContent mixed="false">
           <s:extension base="tns:LoginResult">
             <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
               <s:element minOccurs="0" maxOccurs="1" name="Account" type="tns:UserAccount" />
             </s:sequence>
           </s:extension>
@@ -163,6 +164,9 @@
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
           <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
           <s:element minOccurs="1" maxOccurs="1" name="UserSession" type="s:long" />
           <s:element minOccurs="1" maxOccurs="1" name="UserAccount" type="s:long" />
@@ -171,6 +175,35 @@
           <s:element minOccurs="1" maxOccurs="1" name="ApproveAt" nillable="true" type="s:dateTime" />
           <s:element minOccurs="1" maxOccurs="1" name="ApproveBy" type="s:long" />
           <s:element minOccurs="1" maxOccurs="1" name="CreatedAt" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="transactionList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="transactionListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transactionListResult" type="tns:TransactionsResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionsResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:LoginResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Transactions" type="tns:ArrayOfTransaction" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTransaction">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Transaction" nillable="true" type="tns:Transaction" />
         </s:sequence>
       </s:complexType>
     </s:schema>
@@ -217,6 +250,12 @@
   <wsdl:message name="transferSoapOut">
     <wsdl:part name="parameters" element="tns:transferResponse" />
   </wsdl:message>
+  <wsdl:message name="transactionListSoapIn">
+    <wsdl:part name="parameters" element="tns:transactionList" />
+  </wsdl:message>
+  <wsdl:message name="transactionListSoapOut">
+    <wsdl:part name="parameters" element="tns:transactionListResponse" />
+  </wsdl:message>
   <wsdl:portType name="AccountSoap">
     <wsdl:operation name="Register">
       <wsdl:input message="tns:RegisterSoapIn" />
@@ -245,6 +284,10 @@
     <wsdl:operation name="transfer">
       <wsdl:input message="tns:transferSoapIn" />
       <wsdl:output message="tns:transferSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="transactionList">
+      <wsdl:input message="tns:transactionListSoapIn" />
+      <wsdl:output message="tns:transactionListSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="AccountSoap" type="tns:AccountSoap">
@@ -312,6 +355,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="transactionList">
+      <soap:operation soapAction="http://tempuri.org/transactionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="AccountSoap12" type="tns:AccountSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -371,6 +423,15 @@
     </wsdl:operation>
     <wsdl:operation name="transfer">
       <soap12:operation soapAction="http://tempuri.org/transfer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transactionList">
+      <soap12:operation soapAction="http://tempuri.org/transactionList" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

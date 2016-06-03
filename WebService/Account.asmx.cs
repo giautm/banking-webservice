@@ -167,6 +167,7 @@ namespace BankingWebService
 
         public class AccountResult : LoginResult
         {
+            public Models.User User;
             public Models.UserAccount Account;
         }
 
@@ -182,6 +183,7 @@ namespace BankingWebService
                 mContext.SaveChanges();
 
                 result.Account = account;
+                result.User = mContext.User.Where(u => u.Id == userId).FirstOrDefault();
             }
 
             return result;
@@ -200,6 +202,7 @@ namespace BankingWebService
                 if (account != null)
                 {
                     result.Account = account;
+                    result.User = mContext.User.Where(u => u.Id == account.UserId).FirstOrDefault();
                 }
                 else
                 {
@@ -238,27 +241,76 @@ namespace BankingWebService
                 {
                     result.MessageError = "Số dư tài khoảng gửi không đủ!";
                 }
+                else if (transfeeAccount.UserId == transferAccount.UserId)
+                {
+                    result.MessageError = "Bạn không thể tự chuyển tiền cho mình!";
+                }
                 else
                 {
-                    transfeeAccount.Balances -= amount;
-                    transferAccount.Balances += amount;
-                    mContext.SaveChanges();
+                    var user1 = mContext.User.Where(u => u.Id == transfeeAccount.UserId).FirstOrDefault();
+                    var user2 = mContext.User.Where(u => u.Id == transferAccount.UserId).FirstOrDefault();
+                    if (user1 != null)
+                    {
+                        transfeeAccount.Balances -= amount;
+                        transferAccount.Balances += amount;
 
-                    var transaction1 = new Models.Transaction();
-                    var transaction2 = new Models.Transaction();
+                        var transaction1 = new Models.Transaction();
+                        var transaction2 = new Models.Transaction();
 
-                    // TODO: Generate transaction code;
-                    transaction1.Token = transaction2.Token = DateTime.Now.ToUniversalTime().Subtract(
-                        new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds.ToString();
+                        // TODO: Generate transaction code;
+                        transaction1.Token = transaction2.Token = DateTime.Now.ToUniversalTime().Subtract(
+                            new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds.ToString();
 
-                    transaction1.UserAccount = userId.Value;
-                    transaction1.Amount = amount;
+                        transaction1.Name = user2.Username;
+                        transaction1.UserId = user1.Id;
+                        transaction1.Type = "Chuyển đi";
+                        transaction1.UserAccount = transfeeAccount.Id;
+                        transaction1.Amount = amount;
+                        transaction1.CreatedAt = DateTime.Now;
+                        transaction1.Comment = string.Format("TK [{0}]", transfeeAccount.Number);
 
-                    transaction2.UserAccount = userId.Value;
-                    transaction2.Amount = amount;
 
-                    result.Transaction = transaction1;
+                        transaction2.Name = user1.Username;
+                        transaction2.UserId = user1.Id;
+                        transaction2.Type = "Chuyển đến";
+                        transaction2.UserAccount = transferAccount.Id;
+                        transaction2.Amount = amount;
+                        transaction2.Comment = string.Format("TK [{0}]", transferAccount.Number);
+                        transaction2.CreatedAt = DateTime.Now;
+
+                        mContext.Transaction.Add(transaction1);
+                        mContext.Transaction.Add(transaction2);
+                        mContext.SaveChanges();
+
+                        result.Transaction = transaction1;
+                    }
+                    else
+                    {
+                        result.MessageError = "Không tìm thấy người dùng!";
+                    }
                 }
+            }
+
+            return result;
+        }
+
+        public class TransactionsResult : LoginResult
+        {
+            public List<Models.Transaction> Transactions;
+        }
+
+        [WebMethod]
+        public TransactionsResult transactionList(string sessionToken, string accountNumber)
+        {
+            var result = new TransactionsResult();
+            var userId = _checkSessionToken(sessionToken, result);
+            if (userId.HasValue)
+            {
+                var account = mContext.UserAccount
+                  .Where(a => a.Number == accountNumber && a.UserId == userId)
+                  .FirstOrDefault();
+
+                result.Transactions = mContext.Transaction.Where(t => t.UserAccount == account.Id).ToList();
             }
 
             return result;
