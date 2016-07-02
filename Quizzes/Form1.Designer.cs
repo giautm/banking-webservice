@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtExamTime = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -62,6 +63,8 @@
             this.lbQuestion = new System.Windows.Forms.Label();
             this.btnDone = new System.Windows.Forms.Button();
             this.btnNextQuizzes = new System.Windows.Forms.Button();
+            this.timerAnswerSheet = new System.Windows.Forms.Timer(this.components);
+            this.lbLeftTime = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -82,7 +85,7 @@
             this.groupBox1.Controls.Add(this.cbExamSubject);
             this.groupBox1.Location = new System.Drawing.Point(242, 14);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(410, 113);
+            this.groupBox1.Size = new System.Drawing.Size(405, 113);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thêm đề thi";
@@ -246,16 +249,16 @@
             this.groupBox3.Controls.Add(this.txtLastName);
             this.groupBox3.Controls.Add(this.cbExam);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(12, 132);
+            this.groupBox3.Location = new System.Drawing.Point(653, 14);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(640, 82);
+            this.groupBox3.Size = new System.Drawing.Size(372, 113);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Đăng kí thi";
             // 
             // btnRegisterExam
             // 
-            this.btnRegisterExam.Location = new System.Drawing.Point(548, 46);
+            this.btnRegisterExam.Location = new System.Drawing.Point(278, 77);
             this.btnRegisterExam.Name = "btnRegisterExam";
             this.btnRegisterExam.Size = new System.Drawing.Size(75, 23);
             this.btnRegisterExam.TabIndex = 13;
@@ -265,7 +268,7 @@
             // 
             // txtFirstName
             // 
-            this.txtFirstName.Location = new System.Drawing.Point(305, 19);
+            this.txtFirstName.Location = new System.Drawing.Point(49, 28);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(112, 20);
             this.txtFirstName.TabIndex = 12;
@@ -273,7 +276,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 22);
+            this.label7.Location = new System.Drawing.Point(6, 55);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 3;
@@ -282,7 +285,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(217, 22);
+            this.label8.Location = new System.Drawing.Point(6, 32);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 13);
             this.label8.TabIndex = 11;
@@ -290,7 +293,7 @@
             // 
             // txtLastName
             // 
-            this.txtLastName.Location = new System.Drawing.Point(511, 20);
+            this.txtLastName.Location = new System.Drawing.Point(241, 28);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(112, 20);
             this.txtLastName.TabIndex = 10;
@@ -302,7 +305,7 @@
             "SINH_HOC",
             "HOA_HOC",
             "TIENG_ANH"});
-            this.cbExam.Location = new System.Drawing.Point(99, 19);
+            this.cbExam.Location = new System.Drawing.Point(49, 52);
             this.cbExam.Name = "cbExam";
             this.cbExam.Size = new System.Drawing.Size(112, 21);
             this.cbExam.TabIndex = 2;
@@ -310,7 +313,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(423, 22);
+            this.label9.Location = new System.Drawing.Point(167, 32);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(68, 13);
             this.label9.TabIndex = 9;
@@ -318,34 +321,42 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.lbLeftTime);
             this.groupBox4.Controls.Add(this.groupBox5);
             this.groupBox4.Controls.Add(this.lbQuestion);
             this.groupBox4.Controls.Add(this.btnDone);
             this.groupBox4.Controls.Add(this.btnNextQuizzes);
-            this.groupBox4.Location = new System.Drawing.Point(12, 220);
+            this.groupBox4.Location = new System.Drawing.Point(12, 133);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(640, 277);
+            this.groupBox4.Size = new System.Drawing.Size(1013, 299);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Phần trả lời";
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.rbChooseD);
             this.groupBox5.Controls.Add(this.rbChooseB);
             this.groupBox5.Controls.Add(this.rbChooseC);
             this.groupBox5.Controls.Add(this.rbChooseA);
-            this.groupBox5.Location = new System.Drawing.Point(10, 77);
+            this.groupBox5.Location = new System.Drawing.Point(10, 124);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(613, 153);
+            this.groupBox5.Size = new System.Drawing.Size(986, 128);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Lựa chọn";
             // 
             // rbChooseD
             // 
+            this.rbChooseD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.rbChooseD.AutoSize = true;
-            this.rbChooseD.Location = new System.Drawing.Point(319, 99);
+            this.rbChooseD.Location = new System.Drawing.Point(538, 74);
             this.rbChooseD.Name = "rbChooseD";
             this.rbChooseD.Size = new System.Drawing.Size(71, 17);
             this.rbChooseD.TabIndex = 3;
@@ -356,7 +367,7 @@
             // rbChooseB
             // 
             this.rbChooseB.AutoSize = true;
-            this.rbChooseB.Location = new System.Drawing.Point(319, 38);
+            this.rbChooseB.Location = new System.Drawing.Point(538, 38);
             this.rbChooseB.Name = "rbChooseB";
             this.rbChooseB.Size = new System.Drawing.Size(70, 17);
             this.rbChooseB.TabIndex = 2;
@@ -366,8 +377,9 @@
             // 
             // rbChooseC
             // 
+            this.rbChooseC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.rbChooseC.AutoSize = true;
-            this.rbChooseC.Location = new System.Drawing.Point(6, 99);
+            this.rbChooseC.Location = new System.Drawing.Point(6, 74);
             this.rbChooseC.Name = "rbChooseC";
             this.rbChooseC.Size = new System.Drawing.Size(70, 17);
             this.rbChooseC.TabIndex = 1;
@@ -388,16 +400,18 @@
             // 
             // lbQuestion
             // 
-            this.lbQuestion.AutoSize = true;
-            this.lbQuestion.Location = new System.Drawing.Point(7, 16);
+            this.lbQuestion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbQuestion.Location = new System.Drawing.Point(10, 16);
             this.lbQuestion.Name = "lbQuestion";
-            this.lbQuestion.Size = new System.Drawing.Size(43, 13);
+            this.lbQuestion.Size = new System.Drawing.Size(986, 105);
             this.lbQuestion.TabIndex = 3;
             this.lbQuestion.Text = "Câu hỏi";
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(10, 236);
+            this.btnDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDone.Location = new System.Drawing.Point(10, 258);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(75, 23);
             this.btnDone.TabIndex = 2;
@@ -407,7 +421,8 @@
             // 
             // btnNextQuizzes
             // 
-            this.btnNextQuizzes.Location = new System.Drawing.Point(524, 236);
+            this.btnNextQuizzes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextQuizzes.Location = new System.Drawing.Point(897, 258);
             this.btnNextQuizzes.Name = "btnNextQuizzes";
             this.btnNextQuizzes.Size = new System.Drawing.Size(99, 23);
             this.btnNextQuizzes.TabIndex = 1;
@@ -415,17 +430,33 @@
             this.btnNextQuizzes.UseVisualStyleBackColor = true;
             this.btnNextQuizzes.Click += new System.EventHandler(this.btnNextQuizzes_Click);
             // 
+            // timerAnswerSheet
+            // 
+            this.timerAnswerSheet.Interval = 1000;
+            this.timerAnswerSheet.Tick += new System.EventHandler(this.timerAnswerSheet_Tick);
+            // 
+            // lbLeftTime
+            // 
+            this.lbLeftTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbLeftTime.AutoSize = true;
+            this.lbLeftTime.Location = new System.Drawing.Point(91, 263);
+            this.lbLeftTime.Name = "lbLeftTime";
+            this.lbLeftTime.Size = new System.Drawing.Size(85, 13);
+            this.lbLeftTime.TabIndex = 5;
+            this.lbLeftTime.Text = "Thời gian còn lại";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 510);
+            this.ClientSize = new System.Drawing.Size(1044, 520);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Thi trắc nghiệm";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -477,6 +508,8 @@
         private System.Windows.Forms.Label lbQuestion;
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.Button btnNextQuizzes;
+        private System.Windows.Forms.Timer timerAnswerSheet;
+        private System.Windows.Forms.Label lbLeftTime;
     }
 }
 

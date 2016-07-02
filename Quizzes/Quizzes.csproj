@@ -103,6 +103,12 @@
     <None Include="Service References\QuizzesService\Quizzes.QuizzesService.GetExamListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\QuizzesService\Quizzes.QuizzesService.GetLastAnswerSheetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QuizzesService\Quizzes.QuizzesService.LastAnswerSheetResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\QuizzesService\Quizzes.QuizzesService.LoginResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

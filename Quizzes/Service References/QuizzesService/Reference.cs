@@ -128,6 +128,7 @@ namespace Quizzes.QuizzesService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Quizzes.QuizzesService.QuizzesResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Quizzes.QuizzesService.AnswerSheetResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Quizzes.QuizzesService.DoneAnswerSheetResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Quizzes.QuizzesService.LastAnswerSheetResult))]
     public partial class BasicResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -383,6 +384,45 @@ namespace Quizzes.QuizzesService {
                 if ((object.ReferenceEquals(this.AnswerSheetField, value) != true)) {
                     this.AnswerSheetField = value;
                     this.RaisePropertyChanged("AnswerSheet");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LastAnswerSheetResult", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class LastAnswerSheetResult : Quizzes.QuizzesService.BasicResult {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Quizzes.QuizzesService.AnswerSheet AnswerSheetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Quizzes.QuizzesService.Exam ExamField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public Quizzes.QuizzesService.AnswerSheet AnswerSheet {
+            get {
+                return this.AnswerSheetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AnswerSheetField, value) != true)) {
+                    this.AnswerSheetField = value;
+                    this.RaisePropertyChanged("AnswerSheet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public Quizzes.QuizzesService.Exam Exam {
+            get {
+                return this.ExamField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExamField, value) != true)) {
+                    this.ExamField = value;
+                    this.RaisePropertyChanged("Exam");
                 }
             }
         }
@@ -727,6 +767,13 @@ namespace Quizzes.QuizzesService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoneAnswerSheet", ReplyAction="*")]
         System.Threading.Tasks.Task<Quizzes.QuizzesService.DoneAnswerSheetResponse> DoneAnswerSheetAsync(Quizzes.QuizzesService.DoneAnswerSheetRequest request);
+        
+        // CODEGEN: Generating message contract since element name sessionToken from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetLastAnswerSheet", ReplyAction="*")]
+        Quizzes.QuizzesService.GetLastAnswerSheetResponse GetLastAnswerSheet(Quizzes.QuizzesService.GetLastAnswerSheetRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetLastAnswerSheet", ReplyAction="*")]
+        System.Threading.Tasks.Task<Quizzes.QuizzesService.GetLastAnswerSheetResponse> GetLastAnswerSheetAsync(Quizzes.QuizzesService.GetLastAnswerSheetRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1370,6 +1417,74 @@ namespace Quizzes.QuizzesService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetLastAnswerSheetRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetLastAnswerSheet", Namespace="http://tempuri.org/", Order=0)]
+        public Quizzes.QuizzesService.GetLastAnswerSheetRequestBody Body;
+        
+        public GetLastAnswerSheetRequest() {
+        }
+        
+        public GetLastAnswerSheetRequest(Quizzes.QuizzesService.GetLastAnswerSheetRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetLastAnswerSheetRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string sessionToken;
+        
+        public GetLastAnswerSheetRequestBody() {
+        }
+        
+        public GetLastAnswerSheetRequestBody(string sessionToken) {
+            this.sessionToken = sessionToken;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetLastAnswerSheetResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetLastAnswerSheetResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Quizzes.QuizzesService.GetLastAnswerSheetResponseBody Body;
+        
+        public GetLastAnswerSheetResponse() {
+        }
+        
+        public GetLastAnswerSheetResponse(Quizzes.QuizzesService.GetLastAnswerSheetResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetLastAnswerSheetResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Quizzes.QuizzesService.LastAnswerSheetResult GetLastAnswerSheetResult;
+        
+        public GetLastAnswerSheetResponseBody() {
+        }
+        
+        public GetLastAnswerSheetResponseBody(Quizzes.QuizzesService.LastAnswerSheetResult GetLastAnswerSheetResult) {
+            this.GetLastAnswerSheetResult = GetLastAnswerSheetResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface QuizzesSoapChannel : Quizzes.QuizzesService.QuizzesSoap, System.ServiceModel.IClientChannel {
     }
@@ -1637,6 +1752,31 @@ namespace Quizzes.QuizzesService {
             inValue.Body.sessionToken = sessionToken;
             inValue.Body.answerSheet = answerSheet;
             return ((Quizzes.QuizzesService.QuizzesSoap)(this)).DoneAnswerSheetAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Quizzes.QuizzesService.GetLastAnswerSheetResponse Quizzes.QuizzesService.QuizzesSoap.GetLastAnswerSheet(Quizzes.QuizzesService.GetLastAnswerSheetRequest request) {
+            return base.Channel.GetLastAnswerSheet(request);
+        }
+        
+        public Quizzes.QuizzesService.LastAnswerSheetResult GetLastAnswerSheet(string sessionToken) {
+            Quizzes.QuizzesService.GetLastAnswerSheetRequest inValue = new Quizzes.QuizzesService.GetLastAnswerSheetRequest();
+            inValue.Body = new Quizzes.QuizzesService.GetLastAnswerSheetRequestBody();
+            inValue.Body.sessionToken = sessionToken;
+            Quizzes.QuizzesService.GetLastAnswerSheetResponse retVal = ((Quizzes.QuizzesService.QuizzesSoap)(this)).GetLastAnswerSheet(inValue);
+            return retVal.Body.GetLastAnswerSheetResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Quizzes.QuizzesService.GetLastAnswerSheetResponse> Quizzes.QuizzesService.QuizzesSoap.GetLastAnswerSheetAsync(Quizzes.QuizzesService.GetLastAnswerSheetRequest request) {
+            return base.Channel.GetLastAnswerSheetAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Quizzes.QuizzesService.GetLastAnswerSheetResponse> GetLastAnswerSheetAsync(string sessionToken) {
+            Quizzes.QuizzesService.GetLastAnswerSheetRequest inValue = new Quizzes.QuizzesService.GetLastAnswerSheetRequest();
+            inValue.Body = new Quizzes.QuizzesService.GetLastAnswerSheetRequestBody();
+            inValue.Body.sessionToken = sessionToken;
+            return ((Quizzes.QuizzesService.QuizzesSoap)(this)).GetLastAnswerSheetAsync(inValue);
         }
     }
 }

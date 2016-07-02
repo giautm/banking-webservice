@@ -373,11 +373,59 @@ namespace BankingWebService
                 var answers = mContext.AnswerSheetItem
                     .Where(ai => ai.AnswerSheetId == ans.Id).ToArray();
                 ans.IsClosed = true;
-                ans.Score = answers.Select(i => i.Match ? 1.0 : 0.0).Sum() / answers.Length;
+                ans.Score = Math.Round((answers.Select(i => i.Match ? 1.0 : 0.0).Sum() / answers.Length) * 10, 1);
 
                 mContext.SaveChanges();
 
                 result.AnswerSheet = ans;
+            }
+
+            return result;
+        }
+
+        public class LastAnswerSheetResult : BasicResult
+        {
+            public Models.AnswerSheet AnswerSheet;
+            public Models.Exam Exam;
+        }
+
+        [WebMethod]
+        public LastAnswerSheetResult GetLastAnswerSheet(string sessionToken)
+        {
+            var result = new LastAnswerSheetResult();
+            var userId = _checkSessionToken(sessionToken, result);
+            if (userId.HasValue)
+            {
+                var answerSheets = mContext.AnswerSheet
+                    .Where(a => a.IsClosed != true && a.UserId == userId)
+                    .OrderByDescending(a => a.Id)
+                    .ToArray();
+
+                Models.AnswerSheet lastAnswerSheet = null;
+                Models.Exam lastExam = null;
+
+                foreach (var item in answerSheets)
+                {
+                    var exam = mContext.Exam.FirstOrDefault(e => e.Id == item.ExamId);
+                    if (exam != null)
+                    {
+                        var deadline = item.CreatedAt.AddMinutes(exam.Time);
+                        if (deadline > DateTime.Now || lastAnswerSheet == null)
+                        {
+                            lastAnswerSheet = item;
+                            lastExam = exam;
+                        }
+                        else
+                        {
+                            item.IsClosed = true;
+                        }
+                    }
+                }
+
+                mContext.SaveChanges();
+
+                result.AnswerSheet = lastAnswerSheet;
+                result.Exam = lastExam;
             }
 
             return result;

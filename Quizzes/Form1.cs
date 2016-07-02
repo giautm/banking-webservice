@@ -17,6 +17,7 @@ namespace Quizzes
         private string MessageBoxTitle;
         private string mSessionToken;
         private AnswerSheet mAnswerSheet;
+        private double mLeftTime;
 
         public Form1()
         {
@@ -27,6 +28,7 @@ namespace Quizzes
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            showAnswer(false);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -142,11 +144,32 @@ namespace Quizzes
                 btnLogout.Enabled = true;
 
                 UpdateExamList();
+
+                var result2 = mQuizzes.GetLastAnswerSheet(mSessionToken);
+                if (result2.AnswerSheet != null && result2.Exam != null)
+                {
+                    initAnswerSheetTimer(result2.AnswerSheet, result2.Exam);
+                    mAnswerSheet = result2.AnswerSheet;
+
+                    loadNextQuizzes();
+
+                    txtFirstName.Text = mAnswerSheet.FirstName;
+                    txtLastName.Text = mAnswerSheet.LastName;
+
+                    showRegister(false);
+                    showAnswer(true);
+                }
+                else
+                {
+                    showRegister(true);
+                    showAnswer(false);
+                }
             }
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            mQuizzes.Logout(mSessionToken);
             mSessionToken = null;
             btnLogin.Enabled = true;
             txtUsername.Enabled = true;
@@ -179,9 +202,43 @@ namespace Quizzes
                 MessageBox.Show(string.Format("Đăng kí thi thành công, môn thi {0}, thời gian làm bài {1} phút",
                     exam.Subject, exam.Time));
 
-                showRegister(false);
-
                 loadNextQuizzes();
+                showRegister(false);
+                showAnswer(true);
+                initAnswerSheetTimer(mAnswerSheet, exam);
+            }
+        }
+
+        private void initAnswerSheetTimer(AnswerSheet answerSheet, Exam exam)
+        {
+            mLeftTime = exam.Time - (DateTime.Now - answerSheet.CreatedAt).TotalMinutes;
+            timerAnswerSheet.Interval = 1000;
+            timerAnswerSheet.Start();
+        }
+
+        private void timerAnswerSheet_Tick(object sender, EventArgs e)
+        {
+            mLeftTime -= 1.0 / 60;
+            if (mLeftTime <= 0)
+            {
+                timerAnswerSheet.Stop();
+
+                var result = mQuizzes.DoneAnswerSheet(mSessionToken, mAnswerSheet);
+                if (result.MessageError != null)
+                {
+                    MessageBox.Show(result.MessageError, this.MessageBoxTitle);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Đã nộp bài thành công!\r\nĐiểm số: {0}",
+                        result.AnswerSheet.Score), this.MessageBoxTitle);
+                }
+            }
+            else
+            {
+                lbLeftTime.Text = string.Format("Thời gian còn lại: {0} phút, {1} giây",
+                    (int)mLeftTime, Math.Round((mLeftTime - ((int)mLeftTime)) * 60, 0));
             }
         }
 
@@ -225,9 +282,43 @@ namespace Quizzes
             cbExam.Enabled = enabled;
             txtFirstName.Enabled = enabled;
             txtLastName.Enabled = enabled;
+            btnRegisterExam.Enabled = enabled;
         }
 
         private void btnNextQuizzes_Click(object sender, EventArgs e)
+        {
+            if (mAnswerSheet != null && mAnswerSheet.IsClosed == false)
+            {
+                var answer = string.Empty;
+                if (rbChooseA.Checked) answer = "A";
+                if (rbChooseB.Checked) answer = "B";
+                if (rbChooseC.Checked) answer = "C";
+                if (rbChooseD.Checked) answer = "D";
+
+                var result = mQuizzes.Answer(mSessionToken, mAnswerSheet,
+                    mAnswerSheet.CurrentQuizzes.Value, answer);
+
+                if (result.MessageError != null)
+                {
+                    MessageBox.Show(result.MessageError, this.MessageBoxTitle);
+                    return;
+                }
+            }
+
+            loadNextQuizzes();
+        }
+
+        private void showAnswer(bool enabled)
+        {
+            rbChooseA.Enabled = enabled;
+            rbChooseB.Enabled = enabled;
+            rbChooseC.Enabled = enabled;
+            rbChooseD.Enabled = enabled;
+            btnDone.Enabled = enabled;
+            btnNextQuizzes.Enabled = enabled;
+        }
+
+        private void btnDone_Click(object sender, EventArgs e)
         {
             var answer = string.Empty;
             if (rbChooseA.Checked) answer = "A";
@@ -235,21 +326,9 @@ namespace Quizzes
             if (rbChooseC.Checked) answer = "C";
             if (rbChooseD.Checked) answer = "D";
 
-            var result = mQuizzes.Answer(mSessionToken, mAnswerSheet,
+            mQuizzes.Answer(mSessionToken, mAnswerSheet,
                 mAnswerSheet.CurrentQuizzes.Value, answer);
-            if (result.MessageError != null)
-            {
-                MessageBox.Show(result.MessageError, this.MessageBoxTitle);
-                return;
-            }
-            else
-            {
-                loadNextQuizzes();
-            }
-        }
 
-        private void btnDone_Click(object sender, EventArgs e)
-        {
             var result = mQuizzes.DoneAnswerSheet(mSessionToken, mAnswerSheet);
             if (result.MessageError != null)
             {
@@ -261,6 +340,7 @@ namespace Quizzes
                 MessageBox.Show(string.Format("Đã nộp bài thành công!\r\nĐiểm số: {0}",
                     result.AnswerSheet.Score), this.MessageBoxTitle);
             }
+            showAnswer(false);
         }
     }
 
