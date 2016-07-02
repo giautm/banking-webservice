@@ -410,7 +410,7 @@ namespace BankingWebService
                     if (exam != null)
                     {
                         var deadline = item.CreatedAt.AddMinutes(exam.Time);
-                        if (deadline > DateTime.Now || lastAnswerSheet == null)
+                        if (deadline < DateTime.Now && lastAnswerSheet == null)
                         {
                             lastAnswerSheet = item;
                             lastExam = exam;

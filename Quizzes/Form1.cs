@@ -340,7 +340,9 @@ namespace Quizzes
                 MessageBox.Show(string.Format("Đã nộp bài thành công!\r\nĐiểm số: {0}",
                     result.AnswerSheet.Score), this.MessageBoxTitle);
             }
+
             showAnswer(false);
+            timerAnswerSheet.Stop();
         }
     }
 
