@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="Register">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Salt" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedAt" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RegisterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterResult" type="tns:BasicResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BasicResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SessionToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MessageError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="tns:BasicResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MakeExam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="exam" type="tns:Exam" />
+            <s:element minOccurs="1" maxOccurs="1" name="numberOf" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Exam">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Time" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="Quizzes" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MakeExamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakeExamResult" type="tns:BasicResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExamList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExamListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExamListResult" type="tns:ExamListResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ExamListResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Exams" type="tns:ArrayOfExam" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfExam">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Exam" nillable="true" type="tns:Exam" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NextQuizzes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="answerSheet" type="tns:AnswerSheet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AnswerSheet">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExamId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Score" nillable="true" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentQuizzes" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsClosed" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedAt" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NextQuizzesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NextQuizzesResult" type="tns:QuizzesResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="QuizzesResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AnswerSheet" type="tns:AnswerSheet" />
+              <s:element minOccurs="1" maxOccurs="1" name="Index" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="Question" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Answer" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ChooseA" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ChooseB" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ChooseC" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ChooseD" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="MakeAnswerSheet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="answerSheet" type="tns:AnswerSheet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeAnswerSheetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakeAnswerSheetResult" type="tns:AnswerSheetResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AnswerSheetResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AnswerSheet" type="tns:AnswerSheet" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Answer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="answerSheet" type="tns:AnswerSheet" />
+            <s:element minOccurs="1" maxOccurs="1" name="quizzesId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="answer" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnswerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AnswerResult" type="tns:BasicResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoneAnswerSheet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="answerSheet" type="tns:AnswerSheet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoneAnswerSheetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DoneAnswerSheetResult" type="tns:DoneAnswerSheetResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DoneAnswerSheetResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BasicResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AnswerSheet" type="tns:AnswerSheet" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterSoapIn">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeExamSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeExam" />
+  </wsdl:message>
+  <wsdl:message name="MakeExamSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeExamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExamListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExamList" />
+  </wsdl:message>
+  <wsdl:message name="GetExamListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExamListResponse" />
+  </wsdl:message>
+  <wsdl:message name="NextQuizzesSoapIn">
+    <wsdl:part name="parameters" element="tns:NextQuizzes" />
+  </wsdl:message>
+  <wsdl:message name="NextQuizzesSoapOut">
+    <wsdl:part name="parameters" element="tns:NextQuizzesResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeAnswerSheetSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeAnswerSheet" />
+  </wsdl:message>
+  <wsdl:message name="MakeAnswerSheetSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeAnswerSheetResponse" />
+  </wsdl:message>
+  <wsdl:message name="AnswerSoapIn">
+    <wsdl:part name="parameters" element="tns:Answer" />
+  </wsdl:message>
+  <wsdl:message name="AnswerSoapOut">
+    <wsdl:part name="parameters" element="tns:AnswerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoneAnswerSheetSoapIn">
+    <wsdl:part name="parameters" element="tns:DoneAnswerSheet" />
+  </wsdl:message>
+  <wsdl:message name="DoneAnswerSheetSoapOut">
+    <wsdl:part name="parameters" element="tns:DoneAnswerSheetResponse" />
+  </wsdl:message>
+  <wsdl:portType name="QuizzesSoap">
+    <wsdl:operation name="Register">
+      <wsdl:input message="tns:RegisterSoapIn" />
+      <wsdl:output message="tns:RegisterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeExam">
+      <wsdl:input message="tns:MakeExamSoapIn" />
+      <wsdl:output message="tns:MakeExamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExamList">
+      <wsdl:input message="tns:GetExamListSoapIn" />
+      <wsdl:output message="tns:GetExamListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NextQuizzes">
+      <wsdl:input message="tns:NextQuizzesSoapIn" />
+      <wsdl:output message="tns:NextQuizzesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeAnswerSheet">
+      <wsdl:input message="tns:MakeAnswerSheetSoapIn" />
+      <wsdl:output message="tns:MakeAnswerSheetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Answer">
+      <wsdl:input message="tns:AnswerSoapIn" />
+      <wsdl:output message="tns:AnswerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoneAnswerSheet">
+      <wsdl:input message="tns:DoneAnswerSheetSoapIn" />
+      <wsdl:output message="tns:DoneAnswerSheetSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QuizzesSoap" type="tns:QuizzesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeExam">
+      <soap:operation soapAction="http://tempuri.org/MakeExam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExamList">
+      <soap:operation soapAction="http://tempuri.org/GetExamList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NextQuizzes">
+      <soap:operation soapAction="http://tempuri.org/NextQuizzes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeAnswerSheet">
+      <soap:operation soapAction="http://tempuri.org/MakeAnswerSheet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Answer">
+      <soap:operation soapAction="http://tempuri.org/Answer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoneAnswerSheet">
+      <soap:operation soapAction="http://tempuri.org/DoneAnswerSheet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="QuizzesSoap12" type="tns:QuizzesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap12:operation soapAction="http://tempuri.org/Register" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://tempuri.org/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeExam">
+      <soap12:operation soapAction="http://tempuri.org/MakeExam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExamList">
+      <soap12:operation soapAction="http://tempuri.org/GetExamList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NextQuizzes">
+      <soap12:operation soapAction="http://tempuri.org/NextQuizzes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeAnswerSheet">
+      <soap12:operation soapAction="http://tempuri.org/MakeAnswerSheet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Answer">
+      <soap12:operation soapAction="http://tempuri.org/Answer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoneAnswerSheet">
+      <soap12:operation soapAction="http://tempuri.org/DoneAnswerSheet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Quizzes">
+    <wsdl:port name="QuizzesSoap" binding="tns:QuizzesSoap">
+      <soap:address location="http://localhost:49870/Quizzes.asmx" />
+    </wsdl:port>
+    <wsdl:port name="QuizzesSoap12" binding="tns:QuizzesSoap12">
+      <soap12:address location="http://localhost:49870/Quizzes.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

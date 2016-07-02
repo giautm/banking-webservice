@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account.asmx" />
+    <Content Include="Quizzes.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -93,11 +94,19 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ModelsContext.cs" />
+    <Compile Include="Models\AnswerSheetItem.cs" />
+    <Compile Include="Models\AnswerSheet.cs" />
+    <Compile Include="Models\Exam.cs" />
+    <Compile Include="Models\Quizzes.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserSession.cs" />
+    <Compile Include="Quizzes.asmx.cs">
+      <DependentUpon>Quizzes.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

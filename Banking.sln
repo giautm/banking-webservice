@@ -10,6 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{5
 		{C193DF76-1837-4E5E-B0EC-46428DC46695} = {C193DF76-1837-4E5E-B0EC-46428DC46695}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizzes", "Quizzes\Quizzes.csproj", "{7D705ADD-24ED-4722-B938-6A6E2FA8410D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C193DF76-1837-4E5E-B0EC-46428DC46695} = {C193DF76-1837-4E5E-B0EC-46428DC46695}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +29,10 @@ Global
 		{51D322AB-8A4F-4C57-84BF-22C75369FDF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51D322AB-8A4F-4C57-84BF-22C75369FDF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51D322AB-8A4F-4C57-84BF-22C75369FDF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D705ADD-24ED-4722-B938-6A6E2FA8410D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D705ADD-24ED-4722-B938-6A6E2FA8410D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D705ADD-24ED-4722-B938-6A6E2FA8410D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D705ADD-24ED-4722-B938-6A6E2FA8410D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
